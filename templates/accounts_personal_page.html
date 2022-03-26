@@ -1,0 +1,51 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Your page
+{% endblock title %}
+
+{% block content %}
+
+<h2>Personal page of user {{ request.user.username }}</h2>
+<hr>
+<div>Personal information for each user</div>
+<br>
+<div align="center">
+    <style>
+    table, th, td {
+        border: 1px solid black;
+    }
+    </style>
+    <table>
+        <tr>
+            <td>Username</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>First Name</td>
+            <td>{{ user.first_name }}</td>
+        </tr>
+        <tr>
+            <td>Last Name</td>
+            <td>{{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ user.email }}</td>
+        </tr>
+    </table>
+    <br>
+</div>
+{% if is_not_author %}
+    <button>
+        <a href="{% url 'upgrade' %}">Become an author!</a>
+    </button>
+{% endif %}
+<button>
+    <a href="{% url 'user_update' %}">Edit profile</a>
+</button>
+<button>
+    <a href="{% url 'logout' %}">Log out</a>
+</button>
+
+{% endblock content %}

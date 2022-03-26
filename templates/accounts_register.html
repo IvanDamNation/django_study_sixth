@@ -1,0 +1,49 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Registration
+{% endblock title %}
+
+{% block content %}
+<h2> Registration </h2>
+<div align="left">
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Username</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>First Name</td>
+                <td>{{ form.first_name }}</td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>{{ form.last_name }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ form.email }}</td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>{{ form.password1 }} At least 8 symbols with numbers and letters (with lowers and capitals)</td>
+            </tr>
+            <tr>
+                <td>Confirm password</td>
+                <td>{{ form.password2 }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Sign up">
+                    <button>
+                        <a href="../../accounts/google/login/"> Sign up via Google</a>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock content %}

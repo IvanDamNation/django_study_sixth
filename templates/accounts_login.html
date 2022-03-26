@@ -1,0 +1,40 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Log in
+{% endblock title %}
+
+{% block content %}
+<h2> Log in on portal </h2>
+<div align="left">
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+    <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Log in"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button>
+                    <a href="{% url 'signup' %}"> Sign up </a>
+                </button>
+                <button>
+                    <a href="../accounts/google/login/"> Sign in via Google</a>
+                </button>
+            </td>
+        </tr>
+
+    </table>
+</form>
+</div>
+{% endblock content %}
