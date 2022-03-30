@@ -1,30 +1,12 @@
 from django.db import models
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-# from .news.models import Category
+from news.models import Category
 
 
-# class BaseRegisterForm(UserCreationForm):
-#     email = forms.EmailField(label='Email')
-#     first_name = forms.CharField(label='First Name')
-#     last_name = forms.CharField(label='Last Name')
-#
-#     class Meta:
-#         model = User
-#         fields = (
-#             'username',
-#             'first_name',
-#             'last_name',
-#             'email',
-#             'password1',
-#             'password2',
-#         )
+class SubscribersToCategory(models.Model):
+    subscriber = models.ForeignKey(User, on_delete=models.CASCADE)
+    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-#
-# class SubscribersToCategory(models.Model):
-#     subscriber = models.ForeignKey(User, on_delete=models.CASCADE)
-#     categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return '{user}: {category}'.format(user=self.subscriber, category=self.categoryThrough)
+    def __str__(self):
+        return '{user}: {category}'.format(user=self.subscriber, category=self.categoryThrough)

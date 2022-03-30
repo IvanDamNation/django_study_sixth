@@ -10,7 +10,15 @@ News list
 <h1>{{ new.title|censor }} {{ new.dateCreation|date:'d-m-Y h:i'}}</h1>
 <hr>
 
+
 <div align="left">
+    <h2>
+    Subscribe to this category:
+        {% csrf_token %}
+        <button>
+            <a href="{% url 'subscribe' %}">Subscribe</a>
+        </button>
+    </h2>
     <h3>{{ new.text|censor }}</h3>
 </div>
 

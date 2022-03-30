@@ -7,9 +7,9 @@ from django.contrib.auth.models import User, Group
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 
+from news.models import Category
 from .forms import UserFormUpd, BaseRegisterForm
-# from .models import SubscribersToCategory
-# from .models import BaseRegisterForm
+from .models import SubscribersToCategory
 
 
 class BaseRegisterView(CreateView):
@@ -36,7 +36,8 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-# class SubscribesToCategoryView(SubscribersToCategory):
+# Из конспекта куски кода
+# class SubscribersToCategoryView(SubscribersToCategory):
 #
 #     def get(self, request, *args, **kwargs):
 #         return render(request, 'accounts_make_subscription.html', {})
@@ -57,3 +58,13 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 #         )
 #
 #         return redirect('subscribe:make_subscription')
+
+
+@login_required
+def add_subscribe(request):
+    user = request.user
+    category = Category.objects.get(pk=request.POST['id'])
+    subscribe = SubscribersToCategory(id_user=user, id_category=category)
+    subscribe.save()
+    # Необходимость редиректа?
+    # return redirect('/')
