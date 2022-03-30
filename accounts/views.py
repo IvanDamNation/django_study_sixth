@@ -1,10 +1,14 @@
+from datetime import datetime
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.core.mail import send_mail
+from django.shortcuts import redirect, render
 from django.contrib.auth.models import User, Group
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserFormUpd, BaseRegisterForm
+# from .models import SubscribersToCategory
 # from .models import BaseRegisterForm
 
 
@@ -30,3 +34,26 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, **kwargs):
         return self.request.user
+
+
+# class SubscribesToCategoryView(SubscribersToCategory):
+#
+#     def get(self, request, *args, **kwargs):
+#         return render(request, 'accounts_make_subscription.html', {})
+#
+#     def post(self, request, *args, **kwargs):
+#         subscribe = SubscribersToCategory(
+#             date=datetime.strftime(request.POST['date'], '%Y-%m-%d'),
+#             subscriber=request.POST['user'],
+#             message=request.POST['message'],
+#         )
+#         subscribe.save()
+#
+#         send_mail(
+#             subject=f'{subscribe.subscriber} {subscribe.date.strftime("%Y-%m-%d")}',
+#             message=subscribe.message,
+#             from_email='fortestapps@yandex.ru',
+#             recipient_list=['fortestapps@yandex.ru', ]
+#         )
+#
+#         return redirect('subscribe:make_subscription')

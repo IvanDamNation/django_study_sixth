@@ -34,15 +34,11 @@ class BaseRegisterForm(UserCreationForm):
             'password2',
         )
 
-
-class BasicSignupForm(SignupForm):
-
-    def save(self, request):
-        user = super(BasicSignupForm, self).save(request)
+    def save(self, commit=True):
+        user = super(BaseRegisterForm, self).save()
         basic_group = Group.objects.get(name='common')
         basic_group.user_set.add(user)
-        print('Custom group works!')
-        return print(user)
+        return user
 
 
 class UserFormUpd(ModelForm):
