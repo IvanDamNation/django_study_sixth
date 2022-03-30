@@ -36,28 +36,27 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-# Из конспекта куски кода
-# class SubscribersToCategoryView(SubscribersToCategory):
-#
-#     def get(self, request, *args, **kwargs):
-#         return render(request, 'accounts_make_subscription.html', {})
-#
-#     def post(self, request, *args, **kwargs):
-#         subscribe = SubscribersToCategory(
-#             date=datetime.strftime(request.POST['date'], '%Y-%m-%d'),
-#             subscriber=request.POST['user'],
-#             message=request.POST['message'],
-#         )
-#         subscribe.save()
-#
-#         send_mail(
-#             subject=f'{subscribe.subscriber} {subscribe.date.strftime("%Y-%m-%d")}',
-#             message=subscribe.message,
-#             from_email='fortestapps@yandex.ru',
-#             recipient_list=['fortestapps@yandex.ru', ]
-#         )
-#
-#         return redirect('subscribe:make_subscription')
+class SubscribersToCategoryView(SubscribersToCategory):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'accounts_make_subscription.html', {})
+
+    def post(self, request, *args, **kwargs):
+        subscribe = SubscribersToCategory(
+            date=datetime.strftime(request.POST['date'], '%Y-%m-%d'),
+            subscriber=request.POST['user'],
+            message=request.POST['message'],
+        )
+        subscribe.save()
+
+        send_mail(
+            subject=f'{subscribe.subscriber} {subscribe.date.strftime("%Y-%m-%d")}',
+            message=subscribe.message,
+            from_email='fortestapps@yandex.ru',
+            recipient_list=['fortestapps@yandex.ru', ]
+        )
+
+        return redirect('subscribe:make_subscription')
 
 
 @login_required
@@ -66,5 +65,3 @@ def add_subscribe(request):
     category = Category.objects.get(pk=request.POST['id'])
     subscribe = SubscribersToCategory(id_user=user, id_category=category)
     subscribe.save()
-    # Необходимость редиректа?
-    # return redirect('/')
