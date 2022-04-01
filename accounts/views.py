@@ -7,7 +7,7 @@ from django.contrib.auth.models import User, Group
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 
-from news.models import Category
+from news.models import Category, PostCategory
 from .forms import UserFormUpd, BaseRegisterForm
 from .models import SubscribersToCategory
 
@@ -61,10 +61,11 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 
 @login_required
-def add_subscribe(request):
+def add_subscribe(request, pk):
     user = request.user
-    category = Category.objects.get(pk=request.POST['id'])
+    category_object = PostCategory.objects.get(postThrough=pk)
+    category_object_name = category_object.categoryThrough
+    category = Category.objects.get(name=category_object_name)
     subscribe = SubscribersToCategory(id_user=user, id_category=category)
     subscribe.save()
-    # Необходимость редиректа?
-    # return redirect('/')
+    return redirect('/')
