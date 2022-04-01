@@ -23,7 +23,5 @@ urlpatterns = [
     path('pages/', include('django.contrib.flatpages.urls')),
     path('news/', include('news.urls')),
     path('accounts/', include('allauth.urls')),
-    # Стоит ли этот path оформлять в accounts? Или создаём новый app
-    # path('appointments/', include(('appointment.urls', 'appointments'), namespace='appointments')),
 
 ]
