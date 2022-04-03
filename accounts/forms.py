@@ -5,19 +5,6 @@ from django.contrib.auth.models import Group, User
 from django.forms import ModelForm
 
 
-class CustomLoginForm(LoginForm):
-
-    def login(self, *args, **kwargs):
-        print('Print login')
-        print('self:', self)
-        print(type(self))
-        user = self.user
-        print(user)
-        basic_group = Group.objects.get(name='common')
-        basic_group.user_set.add(user)
-        return super(CustomLoginForm, self).login(*args, **kwargs)
-
-
 class BaseRegisterForm(UserCreationForm):
     email = forms.EmailField(label='Email')
     first_name = forms.CharField(label='First Name')
@@ -50,3 +37,17 @@ class UserFormUpd(ModelForm):
             'last_name',
             'email',
         )
+
+
+class SubscriptionSendForm(forms.Form):
+    subject = forms.CharField(
+        label='Topic',
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    content = forms.CharField(
+        label='Text',
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5})
+    )
+
+

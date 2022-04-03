@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import BaseRegisterView, upgrade_me, UserUpdateView, add_subscribe
+from .views import BaseRegisterView, upgrade_me, UserUpdateView, add_subscribe, test_mail
 
 urlpatterns = [
     path('',
@@ -22,5 +22,10 @@ urlpatterns = [
     path('edit/',
          UserUpdateView.as_view(),
          name='user_update'),
+
+    path('test/', test_mail),
+
+    # __reserved(may conflict with same path in news.urls)
+    # path('<int:pk>/subscribe/', add_subscribe, name='subscribe'),
 
 ]

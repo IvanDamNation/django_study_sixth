@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Feedback
+{% endblock title %}
+
+{% block content %}
+
+<h1>Feedback</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary btn-block">Send</button>
+</form>
+
+{% endblock content %}
