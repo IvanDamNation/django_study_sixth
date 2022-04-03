@@ -72,6 +72,12 @@ class Post(models.Model):
     def get_absolute_url(self):
         return f'/news/{self.pk}'
 
+    def get_category(self):
+        category_object = PostCategory.objects.get(postThrough=self.pk)
+        category_object_name = category_object.categoryThrough
+        category = Category.objects.get(name=category_object_name)
+        return f'{category}'
+
     class Meta:
         verbose_name = 'News'
         verbose_name_plural = 'News'

@@ -12,13 +12,15 @@ News list
 
 
 <div align="left">
+    {% if user.is_authenticated %}
     <h2>
-    Subscribe to this category:
+    Subscribe to this category ({{ new.get_category }}):
         {% csrf_token %}
         <button>
-            <a href="<int:pk>/subscribe/">Subscribe</a>
+            <a href="{{ request.get_full_path }}/subscribe">Subscribe</a>
         </button>
     </h2>
+    {% endif %}
     <h3>{{ new.text|censor }}</h3>
 </div>
 

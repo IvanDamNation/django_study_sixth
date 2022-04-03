@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
@@ -8,7 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 
 from news.models import Category, PostCategory
-from .forms import UserFormUpd, BaseRegisterForm
+from .forms import UserFormUpd, BaseRegisterForm, SubscriptionSendForm
 from .models import SubscribersToCategory
 
 
@@ -66,6 +67,33 @@ def add_subscribe(request, pk):
     category_object = PostCategory.objects.get(postThrough=pk)
     category_object_name = category_object.categoryThrough
     category = Category.objects.get(name=category_object_name)
-    subscribe = SubscribersToCategory(id_user=user, id_category=category)
+    subscribe = SubscribersToCategory(subscriber=user, categoryThrough=category)
     subscribe.save()
-    return redirect('/')
+    return redirect(f'/news/{pk}')
+
+
+def test_mail(request):
+    if request.method == 'POST':
+        form = SubscriptionSendForm(request.POST)
+        if form.is_valid():
+            mail = send_mail(
+                form.cleaned_data['subject'],
+                form.cleaned_data['content'],
+                'fortestapps@yandex.ru',
+                ['fortestapps@yandex.ru'],
+                fail_silently=False
+            )
+
+            if mail:
+                messages.success(request, 'Email send successful!')
+                return redirect('/')
+            else:
+                messages.error(request, 'Send error.')
+
+        else:
+            messages.error(request, 'Error.')
+
+    else:
+        form = SubscriptionSendForm()
+
+    return render(request, 'test.html', {'form': form})
