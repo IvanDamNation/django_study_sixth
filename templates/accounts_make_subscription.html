@@ -1,6 +1,3 @@
-{% extends 'flatpages/default.html' %}
-{% load custom_filters %}
-
 {% block title %}
 
     <meta charset="UTF-8">
@@ -11,9 +8,9 @@
 
 {% block content %}
 
-    <h2>{{ subscribe.subscriber }} Thanks for your subscription!</h2>
+    <h2>Dear, {{ user }}! Thanks for your subscription!</h2>
     <p>
-        You are subscribed {{ appointment.date|date:"d-M-Y" }} in category: {{ appointment.message|truncatechars:50 }}
+        You are subscribed in category: {{ category_object_name }}
     </p>
 
 {% endblock content %}

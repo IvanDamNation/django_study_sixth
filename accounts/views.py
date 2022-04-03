@@ -1,10 +1,12 @@
 from datetime import datetime
 
+from allauth.account.views import EmailView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User, Group
+from django.template.loader import render_to_string
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 
@@ -69,6 +71,22 @@ def add_subscribe(request, pk):
     category = Category.objects.get(name=category_object_name)
     subscribe = SubscribersToCategory(subscriber=user, categoryThrough=category)
     subscribe.save()
+    html_content = render_to_string(
+        'accounts_make_subscription.html',
+        {
+            'user': user,
+            'category_object_name': category_object_name
+        }
+    )
+    mail = EmailMultiAlternatives(
+        subject=f'Hello, {user.username}',
+        body='',
+        from_email='fortestapps@yandex.ru',
+        to=[user.email],
+    )
+    mail.attach_alternative(html_content, 'text/html')
+    mail.send()
+
     return redirect(f'/news/{pk}')
 
 
