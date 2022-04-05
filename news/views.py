@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 
 from .models import Post, Category
@@ -48,6 +50,22 @@ class PostAdd(PostPermission, PostList):
 
         if form.is_valid():
             form.save()
+
+            html_content = render_to_string(
+                'accounts_make_subscription.html',
+                {
+                    'user': user,
+                    'category_object_name': category_object_name
+                }
+            )
+            mail = EmailMultiAlternatives(
+                subject=f'Hello, {user.username}',
+                body='',
+                from_email='fortestapps@yandex.ru',
+                to=[user.email],
+            )
+            mail.attach_alternative(html_content, 'text/html')
+            mail.send()
 
         return super().get(request, *args, **kwargs)
 
