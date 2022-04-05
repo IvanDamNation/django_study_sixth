@@ -3,12 +3,14 @@ from datetime import datetime
 from allauth.account.views import EmailView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import send_mail, EmailMultiAlternatives, mail_managers
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User, Group
 from django.template.loader import render_to_string
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from news.models import Category, PostCategory
 from .forms import UserFormUpd, BaseRegisterForm, SubscriptionSendForm

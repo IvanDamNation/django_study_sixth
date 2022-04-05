@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'protect',
     'fpages',
 
+    'appointments.apps.AppointmentConfig',
+    'django_apscheduler',
+
 ]
 
 SITE_ID = 1
