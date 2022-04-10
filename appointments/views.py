@@ -35,7 +35,7 @@ class AppointView(View):
             news_from_each_category = []
 
             for news in Post.objects.filter(category_id=category.id, dateCreation__week=datetime.now().isocalendar()[1] - 1).values('pk', 'title', 'dateCreation'):
-                new = (f'{news.get("title")}, {news.get("dateCreation")}, http://127.0.0.1:8000/news/{news.get("pk")}')
+                new = (f'{news.get("title")}, {news.get("dateCreation")}, http://127.0.0.1:8000/news/{news.get("pk")}',)
                 news_from_each_category.append(new)
             print("Письма отправлены подписчикам категории:", category.id, category.name)
             for qaz in news_from_each_category:

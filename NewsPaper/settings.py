@@ -78,6 +78,8 @@ AUTHENTICATION_BACKENDS = [
 
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 ROOT_URLCONF = 'NewsPaper.urls'
 
 TEMPLATES = [
@@ -169,7 +171,7 @@ ACCOUNT_FORMS = {'signup': 'accounts.forms.BasicSignupForm'}
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'fortestapps'
-EMAIL_HOST_PASSWORD = 'frhhftinhhdwnefi'
+EMAIL_HOST_PASSWORD = 'zszzncthbrbfooan'
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'

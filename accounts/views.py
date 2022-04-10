@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from news.models import Category, PostCategory
+from news.models import Category, PostCategory, Author
 from .forms import UserFormUpd, BaseRegisterForm, SubscriptionSendForm
 from .models import SubscribersToCategory
 
@@ -29,6 +29,8 @@ def upgrade_me(request):
     author_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
         author_group.user_set.add(user)
+        author_obj = Author(authorUser=user)
+        author_obj.save()
     return redirect('/')
 
 
