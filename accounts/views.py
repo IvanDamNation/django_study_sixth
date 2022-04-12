@@ -47,7 +47,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 # class SubscribersToCategoryView(SubscribersToCategory):
 #
 #     def get(self, request, *args, **kwargs):
-#         return render(request, 'accounts_make_subscription.html', {})
+#         return render(request, 'accounts_email_make_subscription.html', {})
 #
 #     def post(self, request, *args, **kwargs):
 #         subscribe = SubscribersToCategory(
@@ -76,7 +76,7 @@ def add_subscribe(request, pk):
     subscribe = SubscribersToCategory(subscriber=user, categoryThrough=category)
     subscribe.save()
     html_content = render_to_string(
-        'accounts_make_subscription.html',
+        'accounts_email_make_subscription.html',
         {
             'user': user,
             'category_object_name': category_object_name

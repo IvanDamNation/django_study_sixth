@@ -3,7 +3,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 
-from .models import Post, Category
+from .models import Post, Category, Author
 from .filters import PostFilter
 from .forms import PostForm
 
@@ -46,20 +46,27 @@ class PostAdd(PostPermission, PostList):
         return context
 
     def post(self, request, *args, **kwargs):
+        user = request.user
+        author = Author.objects.get(authorUser=user)
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            obj.author = author
+            obj.save()
 
             html_content = render_to_string(
-                'accounts_make_subscription.html',
+                'accounts_email_new_post.html',
                 {
                     'user': user,
-                    'category_object_name': category_object_name
+                    'title': obj.title,
+                    'category': obj.postCategory,
+                    'text': obj.text,
+                    'path': obj.pk,
                 }
             )
             mail = EmailMultiAlternatives(
-                subject=f'Hello, {user.username}',
+                subject=f'Something new for {user.username}',
                 body='',
                 from_email='fortestapps@yandex.ru',
                 to=[user.email],
@@ -91,4 +98,3 @@ class PostDeleteView(PermissionRequiredMixin, DeleteView):
     queryset = Post.objects.all()
     success_url = '/news/'
     permission_required = ('news.add_post', 'news.change_post', )
-

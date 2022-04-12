@@ -170,8 +170,8 @@ ACCOUNT_FORMS = {'signup': 'accounts.forms.BasicSignupForm'}
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'fortestapps'
-EMAIL_HOST_PASSWORD = 'zszzncthbrbfooan'
+EMAIL_HOST_USER = 'getyourownmail_please'
+EMAIL_HOST_PASSWORD = 'fdbginesywcrahcu'
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + '@yandex.ru'

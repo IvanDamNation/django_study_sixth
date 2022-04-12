@@ -1,0 +1,17 @@
+{% load custom_filters %}
+{% block title %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+{% endblock title %}
+
+{% block content %}
+
+    <h2>Dear, {{ user }}! There is a news in your feed!</h2>
+    <p>Title: {{ title|censor }}</p>
+    <p>Some text from news: {{ text|truncatechars:50|censor }}</p>
+    <p><a href="http://127.0.0.1:8000/news/{{ path }}">Read more...</a></p>
+
+{% endblock content %}
