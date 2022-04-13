@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'news',
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'protect',
     'fpages',
 

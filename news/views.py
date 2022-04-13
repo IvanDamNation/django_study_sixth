@@ -60,7 +60,6 @@ class PostAdd(PostPermission, PostList):
                 {
                     'user': user,
                     'title': obj.title,
-                    'category': obj.postCategory,
                     'text': obj.text,
                     'path': obj.pk,
                 }
